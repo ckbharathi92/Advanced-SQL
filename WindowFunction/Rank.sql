@@ -1,18 +1,29 @@
 # Window Function
 # Rank
+# CTE
 
 
-with Test as (
-select distinct patientid, productid,min(dateofconsultation) as dateofconsultation  from patients group by patientid, productid
+with distinctdetails as (
+select distinct patientid, 
+                productid,
+                min(dateofconsultation) as dateofconsultation  
+                from patients 
+                group by patientid, productid
 ) , 
 
-SOURCE AS (
-	SELECT *, 
-			rank() OVER(
+Source AS (
+	SELECT patientid, 
+            productid,
+            dateofconsultation, 
+			Rank() OVER(
 				PARTITION BY patientid
 				order by dateofconsultation
-			) AS record_num 
-	FROM test
+			) AS RankNum 
+	FROM distinctdetails
 )
 
-SELECT patientid, productid, dateofconsultation FROM source WHERE record_num = 2;
+SELECT  patientid, 
+        productid, 
+        dateofconsultation 
+        FROM source 
+        WHERE RankNum = 2;
