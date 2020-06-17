@@ -1,4 +1,4 @@
---The actual table - Occupation is as below:
+--The actual table, Occupation is as below:
 
 --  NAME      OCCUPATION
 --"Samantha"	"Doctor"
